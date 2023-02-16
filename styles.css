@@ -1,0 +1,43 @@
+html {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+h1 {
+    text-align: center;
+}
+
+.calculator {
+    border: 1px solid;
+    width: 600px;
+    min-width: 600px;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.display {
+    width: 90%;
+    height: 200px;
+    border: 1px solid;
+
+    margin: 25px;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    width: 100%;
+}
+
+.btn {
+    width: 29%;
+    height: 75px;
+}
