@@ -84,8 +84,15 @@ h1 {
 
     font-size: 2em;
     color: #f1faee;
-    background-color: #1d3557;
+    background-color: rgb(12, 69, 134);
 
+}
+
+.btn:hover {
+    transition: 200ms ease-in-out;
+    opacity: 85%;
+
+    cursor: pointer;
 }
 
 .clear,
@@ -106,5 +113,12 @@ h1 {
 .subtract,
 .add,
 .equal {
-    /* background-color: rgb(255, 57, 70); */
+    background-color: rgb(32, 136, 255);
+}
+
+@media screen and (max-width: 1250px) {
+    h1 {
+        color: rebeccapurple;
+    }
+
 }
