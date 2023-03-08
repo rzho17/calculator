@@ -2,18 +2,39 @@ const numberButtons = document.querySelectorAll('.num');
 const allBtn = document.querySelectorAll('#btn');
 const clear = document.querySelector('.clear');
 const delBtn = document.querySelector('.delete');
-const display = document.querySelector('.display');
+const displayNumber = document.querySelector('.displayNumber');
+const previousExpression = document.querySelector('.previousExpression');
+const operator = document.querySelectorAll('.operator');
+const addBtn = document.querySelector('.add');
+const equalBtn = document.querySelector('.equal');
+
 
 let initialNum = "";
+let tempNum = 0;
+let chosenOperator = "";
+let emptyArr = [];
 
 for (let num of numberButtons) {
     num.addEventListener('click', () => {
         initialNum += num.value;
-        console.log(initialNum);
-        display.innerText = initialNum;
+        displayNumber.textContent = initialNum;
+        previousExpression.textContent = initialNum;
     })
 }
 
+addBtn.addEventListener('click', function () {
+    emptyArr.push(parseInt(initialNum));
+    chosenOperator = 'add';
+    initialNum = "";
+    emptyArr.push(chosenOperator);
+})
+
+
+equalBtn.addEventListener('click', function () {
+    emptyArr.push(parseInt(initialNum));
+    console.log(emptyArr)
+    operate(emptyArr[0], emptyArr[1], emptyArr[2])
+})
 
 
 delBtn.addEventListener('click', () => {
@@ -21,28 +42,43 @@ delBtn.addEventListener('click', () => {
 
     } else {
         initialNum = initialNum.substring(0, initialNum.length - 1)
-        display.innerText = initialNum;
+        displayNumber.innerText = initialNum;
     }
 })
 
-function add(x, y) {
-    return x + y;
+function add(num1, num2) {
+    return num1 + num2;
 }
 
-function subtract(x, y) {
-    return x - y;
+function subtract(num1, num2) {
+    return num1 - num2;
 }
 
-function multiply(x, y) {
-    return x * y;
+function multiply(num1, num2) {
+    return num1 * num2;
 }
 
-function divide(x, y) {
-    return x / y;
+function divide(num1, num2) {
+    return num1 / num2;
 }
 
-function operate(x, y, operator) {
-    return operator(x, y);
+function operate(num1, operator, num2) {
+
+    let num1ToNum = parseInt(num1);
+    let num2ToNum = parseInt(num2);
+
+    switch (operator) {
+        case 'divide':
+            return divide(num1ToNum, num2ToNum);
+        case 'multiply':
+            return multiply(num1ToNum, num2ToNum);
+        case 'subtract':
+            return subtract(num1ToNum, num2ToNum);
+        case 'add':
+            return console.log(add(num1ToNum, num2ToNum));
+        default:
+            return console.log("do nothing")
+    }
 }
 
 

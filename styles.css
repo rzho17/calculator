@@ -64,9 +64,7 @@ h1 {
 }
 
 .previousExpression {
-    display: flex;
-    justify-content: center;
-    align-self: flex-end;
+    min-height: 25px;
     font-size: .5em;
     letter-spacing: 2px;
 }
