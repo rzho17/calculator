@@ -6,6 +6,7 @@ const displayNumber = document.querySelector('.displayNumber');
 const previousExpression = document.querySelector('.previousExpression');
 const operator = document.querySelectorAll('.operator');
 const addBtn = document.querySelector('.add');
+const subtractBtn = document.querySelector('.subtract');
 const equalBtn = document.querySelector('.equal');
 
 
@@ -13,27 +14,72 @@ let initialNum = "";
 let tempNum = 0;
 let chosenOperator = "";
 let emptyArr = [];
+let finalNum = 0;
+
+subtractBtn.addEventListener('click', () => {
+    if (emptyArr.length < 1) {
+        emptyArr.push(parseInt(initialNum));
+    }
+    initialNum = "";
+    emptyArr.push('subtract');
+})
 
 for (let num of numberButtons) {
     num.addEventListener('click', () => {
         initialNum += num.value;
         displayNumber.textContent = initialNum;
         previousExpression.textContent = initialNum;
+
+        // if (emptyArr.length > 1) {
+        //     finalNum += num.value;
+        //     emptyArr.push(parseInt(finalNum));
+        //     finalNum = 0;
+        //     initialNum = operate(emptyArr[0], emptyArr[1], emptyArr[2])
+        //     emptyArr = [];
+        //     emptyArr.push(initialNum);
+        //     console.log(emptyArr)
+        //     displayNumber.textContent = emptyArr[0];
+        // }
     })
 }
 
-addBtn.addEventListener('click', function () {
-    emptyArr.push(parseInt(initialNum));
+addBtn.addEventListener('click', function (e) {
+
+    if (emptyArr.length === 2) {
+        emptyArr.push(parseInt(initialNum));
+        console.log(emptyArr);
+        initialNum = operate(emptyArr[0], emptyArr[1], emptyArr[2])
+        emptyArr = [];
+        emptyArr.push(initialNum);
+        console.log(emptyArr)
+        displayNumber.textContent = emptyArr[0];
+    }
+    if (emptyArr.length < 1) {
+        emptyArr.push(parseInt(initialNum));
+    }
     chosenOperator = 'add';
     initialNum = "";
     emptyArr.push(chosenOperator);
+
+    // if (emptyArr.length < 3) {
+    //     initialNum += e.target.value;
+    //     initialNum = initialNum.slice(3)
+    //     emptyArr.push(initialNum)
+    // }
+
 })
+
+
 
 
 equalBtn.addEventListener('click', function () {
     emptyArr.push(parseInt(initialNum));
+    console.log(emptyArr);
+    initialNum = operate(emptyArr[0], emptyArr[1], emptyArr[2])
+    emptyArr = [];
+    emptyArr.push(initialNum);
     console.log(emptyArr)
-    operate(emptyArr[0], emptyArr[1], emptyArr[2])
+    displayNumber.textContent = emptyArr[0];
 })
 
 
@@ -41,6 +87,7 @@ delBtn.addEventListener('click', () => {
     if (initialNum.length < 0) {
 
     } else {
+        initialNum = initialNum.toString();
         initialNum = initialNum.substring(0, initialNum.length - 1)
         displayNumber.innerText = initialNum;
     }
@@ -75,7 +122,7 @@ function operate(num1, operator, num2) {
         case 'subtract':
             return subtract(num1ToNum, num2ToNum);
         case 'add':
-            return console.log(add(num1ToNum, num2ToNum));
+            return add(num1ToNum, num2ToNum);
         default:
             return console.log("do nothing")
     }
