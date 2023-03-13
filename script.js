@@ -1,3 +1,4 @@
+
 const numberButtons = document.querySelectorAll('.num');
 const allBtn = document.querySelectorAll('#btn');
 const clear = document.querySelector('.clear');
@@ -14,7 +15,8 @@ const equalBtn = document.querySelector('.equal');
 let initialNum = "";
 let chosenOperator = "";
 let emptyArr = [];
-// let containsDecimal = false;
+let trimmedNum = "";
+
 
 
 
@@ -30,8 +32,6 @@ subtractBtn.addEventListener('click', (e) => {
     if (emptyArr[1] !== e.target.value && emptyArr.length === 2) {
         doOperate();
         console.log(emptyArr[0])
-        // emptyArr[1] = e.target.value;
-        // showAlert(e);
     }
     showAlert(e);
 })
@@ -82,7 +82,9 @@ function showAlert(e) {
         initialNum = "";
         emptyArr.push(chosenOperator);
     }
-    displayNumber.textContent = emptyArr[0];
+
+    // displayNumber.textContent = emptyArr[0];
+    checkDecimal();
 }
 
 function doOperate() {
@@ -95,7 +97,21 @@ function doOperate() {
         console.log(emptyArr)
         displayNumber.textContent = emptyArr[0];
     }
-    displayNumber.textContent = emptyArr[0];
+
+    checkDecimal();
+}
+
+function checkDecimal() {
+    if (initialNum !== '') {
+        if (emptyArr[0].toString().includes('.')) {
+            trimmedNum = emptyArr[0].toString();
+            trimmedNum = trimmedNum.substring(0, trimmedNum.indexOf('.') + 5);
+            trimmedNum = Math.round(trimmedNum * 1000) / 1000;
+            displayNumber.textContent = trimmedNum;
+        } else {
+            displayNumber.textContent = emptyArr[0];
+        }
+    }
 }
 
 function add(num1, num2) {
