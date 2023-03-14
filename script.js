@@ -17,6 +17,8 @@ let initialNum = "";
 let chosenOperator = "";
 let emptyArr = [];
 let trimmedNum = "";
+let tempNum = "";
+let otherNum = "";
 
 
 
@@ -25,7 +27,8 @@ for (let num of numberButtons) {
     num.addEventListener('click', (e) => {
         initialNum += num.value;
         displayNumber.textContent = initialNum;
-        previousExpression.textContent = initialNum;
+        // tempNum = initialNum;
+        previousExpression.textContent = `${tempNum} ${chosenOperator}`;
     })
 }
 
@@ -33,9 +36,9 @@ divideBtn.addEventListener('click', btnOperator);
 
 multiplyBtn.addEventListener('click', btnOperator);
 
-subtractBtn.addEventListener('click', btnOperator)
+subtractBtn.addEventListener('click', btnOperator);
 
-addBtn.addEventListener('click', btnOperator)
+addBtn.addEventListener('click', btnOperator);
 
 
 decimalBtn.addEventListener('click', () => {
@@ -60,11 +63,14 @@ delBtn.addEventListener('click', () => {
 })
 
 function showAlert(e) {
+    tempNum = initialNum;
+
     decimalBtn.disabled = false;
     if (initialNum !== '') {
         if (emptyArr.length === 2) {
-            if (emptyArr[1] === e.target.value) {
-            }
+            // if (emptyArr[1] === e.target.value) {
+            //     console.log('hi')
+            // }
             getOperator();
         }
         else if (emptyArr.length < 1) {
@@ -74,36 +80,52 @@ function showAlert(e) {
         initialNum = "";
         emptyArr.push(chosenOperator);
     }
-
     // displayNumber.textContent = emptyArr[0];
+    checkDecimal();
+    previousExpression.textContent = `${tempNum} ${chosenOperator} ${initialNum}`;
+}
+
+function getOperator(e) {
+    // if (initialNum == 0 && chosenOperator === 'divide') {
+    //     alert('cant do that');
+    //     initialNum = initialNum.substring(1)
+    //     emptyArr.shift(initialNum);
+    //     emptyArr.pop();
+    // } else { 
+    otherNum = initialNum;
+    tempNum = emptyArr[0].toString();
+    // tempNum = initialNum;
+    if (emptyArr.length !== 1 && initialNum !== '') {
+        emptyArr.push(parseFloat(initialNum));
+        console.log(emptyArr);
+        initialNum = operate(emptyArr[0], emptyArr[1], emptyArr[2])
+        emptyArr = [];
+        emptyArr.push(initialNum);
+        console.log(emptyArr)
+        displayNumber.textContent = emptyArr[0];
+    }
+
+    showPrevious(tempNum, otherNum);
     checkDecimal();
 }
 
-function getOperator() {
-    if (initialNum == 0 && chosenOperator === 'divide') {
-        alert('cant do that');
-        emptyArr[0] = 0;
-        emptyArr.pop();
+function showPrevious(num1, num2) {
+    if (num1.includes('.') || num2.includes('.')) {
+        num1 = emptyArr[0].toString();
+        num1 = num1.substring(0, num1.indexOf('.') + 5);
+        num1 = Math.round(num1 * 1000) / 1000;
+        // num2 = emptyArr[0].toString();
+        num2 = num2.substring(0, num2.indexOf('.') + 5);
+        num2 = Math.round(num2 * 1000) / 1000;
+        previousExpression.textContent = `${num1} ${chosenOperator} ${num2} =`;
     } else {
-        if (emptyArr.length !== 1 && initialNum !== '') {
-            emptyArr.push(parseFloat(initialNum));
-            console.log(emptyArr);
-            initialNum = operate(emptyArr[0], emptyArr[1], emptyArr[2])
-            emptyArr = [];
-            emptyArr.push(initialNum);
-            console.log(emptyArr)
-            displayNumber.textContent = emptyArr[0];
-        }
-
+        previousExpression.textContent = `${tempNum} ${chosenOperator} ${otherNum} =`;
     }
-
-    checkDecimal();
 }
 
 function btnOperator(e) {
     if (emptyArr[1] !== e.target.value && emptyArr.length === 2) {
         getOperator();
-        console.log(emptyArr[0])
     }
     showAlert(e);
 }
@@ -156,7 +178,7 @@ function operate(num1, operator, num2) {
         case 'add':
             return add(num1ToNum, num2ToNum);
         default:
-            return console.log("do nothing")
+            return parseFloat(initialNum);
     }
 }
 
