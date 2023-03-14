@@ -1,4 +1,3 @@
-
 const numberButtons = document.querySelectorAll('.num');
 const allBtn = document.querySelectorAll('#btn');
 const clear = document.querySelector('.clear');
@@ -8,6 +7,8 @@ const previousExpression = document.querySelector('.previousExpression');
 const operator = document.querySelectorAll('.operator');
 const addBtn = document.querySelector('.add');
 const subtractBtn = document.querySelector('.subtract');
+const multiplyBtn = document.querySelector('.multiply')
+const divideBtn = document.querySelector('.divide');
 const decimalBtn = document.querySelector('.decimal');
 const equalBtn = document.querySelector('.equal');
 
@@ -28,23 +29,14 @@ for (let num of numberButtons) {
     })
 }
 
-subtractBtn.addEventListener('click', (e) => {
-    if (emptyArr[1] !== e.target.value && emptyArr.length === 2) {
-        doOperate();
-        console.log(emptyArr[0])
-    }
-    showAlert(e);
-})
+divideBtn.addEventListener('click', btnOperator);
 
+multiplyBtn.addEventListener('click', btnOperator);
 
-addBtn.addEventListener('click', function (e) {
+subtractBtn.addEventListener('click', btnOperator)
 
-    if (emptyArr[1] !== e.target.value && emptyArr.length === 2) {
-        doOperate();
-        console.log(emptyArr[0])
-    }
-    showAlert(e);
-})
+addBtn.addEventListener('click', btnOperator)
+
 
 decimalBtn.addEventListener('click', () => {
     if (initialNum.includes('.')) {
@@ -52,7 +44,7 @@ decimalBtn.addEventListener('click', () => {
     }
 })
 
-equalBtn.addEventListener('click', doOperate);
+equalBtn.addEventListener('click', getOperator);
 
 delBtn.addEventListener('click', () => {
     if (initialNum.length > 0) {
@@ -73,7 +65,7 @@ function showAlert(e) {
         if (emptyArr.length === 2) {
             if (emptyArr[1] === e.target.value) {
             }
-            doOperate();
+            getOperator();
         }
         else if (emptyArr.length < 1) {
             emptyArr.push(parseFloat(initialNum));
@@ -87,27 +79,46 @@ function showAlert(e) {
     checkDecimal();
 }
 
-function doOperate() {
-    if (emptyArr.length !== 1 && initialNum !== '') {
-        emptyArr.push(parseFloat(initialNum));
-        console.log(emptyArr);
-        initialNum = operate(emptyArr[0], emptyArr[1], emptyArr[2])
-        emptyArr = [];
-        emptyArr.push(initialNum);
-        console.log(emptyArr)
-        displayNumber.textContent = emptyArr[0];
+function getOperator() {
+    if (initialNum == 0 && chosenOperator === 'divide') {
+        alert('cant do that');
+        emptyArr[0] = 0;
+        emptyArr.pop();
+    } else {
+        if (emptyArr.length !== 1 && initialNum !== '') {
+            emptyArr.push(parseFloat(initialNum));
+            console.log(emptyArr);
+            initialNum = operate(emptyArr[0], emptyArr[1], emptyArr[2])
+            emptyArr = [];
+            emptyArr.push(initialNum);
+            console.log(emptyArr)
+            displayNumber.textContent = emptyArr[0];
+        }
+
     }
 
     checkDecimal();
 }
 
+function btnOperator(e) {
+    if (emptyArr[1] !== e.target.value && emptyArr.length === 2) {
+        getOperator();
+        console.log(emptyArr[0])
+    }
+    showAlert(e);
+}
+
 function checkDecimal() {
     if (initialNum !== '') {
         if (emptyArr[0].toString().includes('.')) {
-            trimmedNum = emptyArr[0].toString();
-            trimmedNum = trimmedNum.substring(0, trimmedNum.indexOf('.') + 5);
-            trimmedNum = Math.round(trimmedNum * 1000) / 1000;
-            displayNumber.textContent = trimmedNum;
+            if (emptyArr[0] > 9999999999999) {
+                displayNumber.textContent = emptyArr[0];
+            } else {
+                trimmedNum = emptyArr[0].toString();
+                trimmedNum = trimmedNum.substring(0, trimmedNum.indexOf('.') + 5);
+                trimmedNum = Math.round(trimmedNum * 1000) / 1000;
+                displayNumber.textContent = trimmedNum;
+            }
         } else {
             displayNumber.textContent = emptyArr[0];
         }
