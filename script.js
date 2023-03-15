@@ -1,6 +1,6 @@
 const numberButtons = document.querySelectorAll('.num');
 const allBtn = document.querySelectorAll('#btn');
-const clear = document.querySelector('.clear');
+const clearBtn = document.querySelector('.clear');
 const delBtn = document.querySelector('.delete');
 const displayNumber = document.querySelector('.displayNumber');
 const previousExpression = document.querySelector('.previousExpression');
@@ -31,6 +31,22 @@ for (let num of numberButtons) {
         // tempNum = initialNum;
         // previousExpression.textContent = `${tempNum} ${chosenOperator}`;
         // previousExpression.textContent = `${initialNum} ${chosenOperator} ${otherNum} =`;
+        // previousExpression.textContent = initialNum;
+        switch (chosenOperator) {
+            case 'divide':
+                chosenOperator = "/";
+                break;
+            case 'multiply':
+                chosenOperator = "*";
+                break;
+            case 'subtract':
+                chosenOperator = "-";
+                break;
+            case 'add':
+                chosenOperator = "+";
+                break;
+        }
+        previousExpression.textContent = `${initialNum} ${chosenOperator}`
     })
 }
 
@@ -41,6 +57,8 @@ multiplyBtn.addEventListener('click', btnOperator);
 subtractBtn.addEventListener('click', btnOperator);
 
 addBtn.addEventListener('click', btnOperator);
+
+clearBtn.addEventListener('click', clear);
 
 
 decimalBtn.addEventListener('click', () => {
@@ -111,8 +129,20 @@ function getOperator(e) {
     //     emptyArr.shift(initialNum);
     //     emptyArr.pop();
     // } else { 
+    if (initialNum == 0 && emptyArr[1] === 'divide') {
+        alert("Nice Try :)")
+        clear();
+    }
     otherNum = initialNum;
-    tempNum = emptyArr[0].toString();
+
+    if (emptyArr[0] === undefined) {
+        emptyArr[0] = 0;
+        tempNum = emptyArr[0].toString();
+
+    } else {
+        tempNum = emptyArr[0].toString();
+    }
+
 
     if (emptyArr.length !== 1 && initialNum !== '') {
         emptyArr.push(parseFloat(initialNum));
@@ -147,7 +177,8 @@ function showPrevious(num1, num2, operator) {
     }
 
     num1 = emptyArr[0].toString();
-    console.log(num1)
+    num2 = num2.toString();
+
     if (num1.includes('.') || num2.includes('.')) {
         if (tempNum === '') {
             previousExpression.textContent = `${initialNum} ${chosenOperator} ${num2} =`;
@@ -190,6 +221,19 @@ function checkDecimal() {
             displayNumber.textContent = emptyArr[0];
         }
     }
+}
+
+function clear() {
+    initialNum = "";
+    chosenOperator = "";
+    emptyArr = [];
+    trimmedNum = "";
+    tempNum = "";
+    otherNum = "";
+    tempOperator = '';
+
+    displayNumber.textContent = '0';
+    previousExpression.textContent = '';
 }
 
 function add(num1, num2) {
