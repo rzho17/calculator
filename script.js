@@ -19,6 +19,7 @@ let emptyArr = [];
 let trimmedNum = "";
 let tempNum = "";
 let otherNum = "";
+let tempOperator = '';
 
 
 
@@ -28,7 +29,8 @@ for (let num of numberButtons) {
         initialNum += num.value;
         displayNumber.textContent = initialNum;
         // tempNum = initialNum;
-        previousExpression.textContent = `${tempNum} ${chosenOperator}`;
+        // previousExpression.textContent = `${tempNum} ${chosenOperator}`;
+        // previousExpression.textContent = `${initialNum} ${chosenOperator} ${otherNum} =`;
     })
 }
 
@@ -63,7 +65,7 @@ delBtn.addEventListener('click', () => {
 })
 
 function showAlert(e) {
-    tempNum = initialNum;
+    // tempNum = initialNum;
 
     decimalBtn.disabled = false;
     if (initialNum !== '') {
@@ -81,8 +83,25 @@ function showAlert(e) {
         emptyArr.push(chosenOperator);
     }
     // displayNumber.textContent = emptyArr[0];
+
+    // switch (chosenOperator) {
+    //     case 'divide':
+    //         chosenOperator = "/";
+    //         break;
+    //     case 'multiply':
+    //         chosenOperator = "*";
+    //         break;
+    //     case 'subtract':
+    //         chosenOperator = "-";
+    //         break;
+    //     case 'add':
+    //         chosenOperator = "+";
+    //         break;
+    // }
+
+    // previousExpression.textContent = `${tempNum} ${chosenOperator} ${otherNum} =`;
     checkDecimal();
-    previousExpression.textContent = `${tempNum} ${chosenOperator} ${initialNum}`;
+    // previousExpression.textContent = `${tempNum} ${chosenOperator} ${initialNum}`;
 }
 
 function getOperator(e) {
@@ -94,7 +113,7 @@ function getOperator(e) {
     // } else { 
     otherNum = initialNum;
     tempNum = emptyArr[0].toString();
-    // tempNum = initialNum;
+
     if (emptyArr.length !== 1 && initialNum !== '') {
         emptyArr.push(parseFloat(initialNum));
         console.log(emptyArr);
@@ -105,24 +124,49 @@ function getOperator(e) {
         displayNumber.textContent = emptyArr[0];
     }
 
-    showPrevious(tempNum, otherNum);
+    showPrevious(tempNum, otherNum, chosenOperator);
     checkDecimal();
 }
 
-function showPrevious(num1, num2) {
+//displays the previous values above current displayed number to allow for easier viewing
+function showPrevious(num1, num2, operator) {
+
+    switch (operator) {
+        case 'divide':
+            chosenOperator = "/";
+            break;
+        case 'multiply':
+            chosenOperator = "*";
+            break;
+        case 'subtract':
+            chosenOperator = "-";
+            break;
+        case 'add':
+            chosenOperator = "+";
+            break;
+    }
+
+    num1 = emptyArr[0].toString();
+    console.log(num1)
     if (num1.includes('.') || num2.includes('.')) {
-        num1 = emptyArr[0].toString();
-        num1 = num1.substring(0, num1.indexOf('.') + 5);
-        num1 = Math.round(num1 * 1000) / 1000;
-        // num2 = emptyArr[0].toString();
-        num2 = num2.substring(0, num2.indexOf('.') + 5);
-        num2 = Math.round(num2 * 1000) / 1000;
-        previousExpression.textContent = `${num1} ${chosenOperator} ${num2} =`;
+        if (tempNum === '') {
+            previousExpression.textContent = `${initialNum} ${chosenOperator} ${num2} =`;
+        } else {
+            tempNum = tempNum.toString();
+            tempNum = tempNum.substring(0, tempNum.indexOf('.') + 5);
+            tempNum = Math.round(parseFloat(tempNum) * 1000) / 1000;
+
+            num2 = num2.substring(0, num2.indexOf('.') + 5);
+            num2 = Math.round(num2 * 1000) / 1000;
+
+            previousExpression.textContent = `${tempNum} ${chosenOperator} ${num2} =`;
+        }
     } else {
         previousExpression.textContent = `${tempNum} ${chosenOperator} ${otherNum} =`;
     }
 }
 
+//checks if the array has the required values to begin the operations
 function btnOperator(e) {
     if (emptyArr[1] !== e.target.value && emptyArr.length === 2) {
         getOperator();
@@ -130,6 +174,7 @@ function btnOperator(e) {
     showAlert(e);
 }
 
+//converts long numbers with decimals into shorter values that have been rounded
 function checkDecimal() {
     if (initialNum !== '') {
         if (emptyArr[0].toString().includes('.')) {
