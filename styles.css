@@ -6,19 +6,20 @@ html {
 
 body {
     margin: 0;
-    font-family: "Heebo", sans-serif;
+    font-family: "Titillium Web", "Heebo", sans-serif;
     background-image: url('./img/math.jpg');
     background-size: cover;
 
 }
 
 h1 {
-    font-size: 3em;
+    font-size: 4em;
     text-align: center;
     letter-spacing: 5px;
 
     font-weight: 600;
     color: #f1faee;
+    text-shadow: 5px 0 0 #2088ff, 0 -1px 0 #2088ff, 0 1px 0 #2088ff, -1px 0 0 #2088ff;
 
     text-transform: lowercase;
 }
@@ -33,6 +34,7 @@ h1 {
     align-items: center;
 
     border-radius: 10px;
+
 
     background-color: rgba(255, 255, 255, 50%);
 
@@ -68,6 +70,12 @@ h1 {
     min-height: 25px;
     font-size: .5em;
     letter-spacing: 2px;
+    margin-right: 6px;
+}
+
+.displayNumber {
+    margin-right: 6px;
+    letter-spacing: 2px;
 }
 
 .buttons {
@@ -98,6 +106,8 @@ h1 {
     color: #f1faee;
     background-color: rgb(12, 69, 134);
 
+    font-family: "Titillium Web", "Heebo", sans-serif;
+
 }
 
 .btn:hover {
@@ -114,7 +124,7 @@ h1 {
 
 .clear,
 .delete {
-    background-color: rgb(230, 57, 70);
+    background-color: #e63946;
 
     font-size: 1.5em;
     color: #f1faee;
@@ -125,12 +135,35 @@ h1 {
 .subtract,
 .add,
 .equal {
-    background-color: rgb(32, 136, 255);
+    background-color: #2088ff;
 }
+
+footer {
+    font-size: 2em;
+    text-align: center;
+
+    margin: 1em;
+}
+
+.footerContent * {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    height: .8em;
+
+}
+
+img:hover {
+    height: 1em;
+    transition: 100ms ease-in-out;
+}
+
+
 
 @media screen and (max-width: 1250px) {
     h1 {
-        color: rebeccapurple;
+        text-shadow: 5px 0 0 #e63946, 0 -1px 0 #e63946, 0 1px 0 #e63946, -1px 0 0 #e63946;
     }
-
 }
