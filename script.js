@@ -57,10 +57,15 @@ clearBtn.addEventListener('click', clear);
 
 
 decimalBtn.addEventListener('click', () => {
-    if (initialNum = '.') {
-        initialNum = 0;
-    }
-    else if (initialNum.includes('.')) {
+    // if (initialNum !== '.' && initialNum.length === 1) {
+    //     divideBtn.disabled = true;
+    //     multiplyBtn.disabled = true;
+    //     subtractBtn.disabled = true;
+    //     addBtn.disabled = true;
+    //     equalBtn.disabled = true;
+    //     console.log(initialNum.length)
+    // }
+    if (initialNum.includes('.')) {
         decimalBtn.disabled = true;
     }
 })
@@ -82,6 +87,9 @@ delBtn.addEventListener('click', () => {
 
 
 function showAlert(e) {
+    if (initialNum === '.') {
+        initialNum = '0';
+    }
 
     decimalBtn.disabled = false;
     if (initialNum !== '') {
@@ -104,6 +112,10 @@ function showAlert(e) {
 
 //pushes initial num into array to begin operation and display values, checks for 0 dividers and checks validation for tempNum is previousExpression display
 function getOperator(e) {
+
+    if (initialNum === '.') {
+        initialNum = '0';
+    }
 
     if (initialNum == 0 && emptyArr[1] === 'divide') {
         alert("Nice Try :)")
@@ -208,6 +220,7 @@ function clear() {
     tempNum = "";
     otherNum = "";
     tempOperator = '';
+    decimalBtn.disabled = false;
 
     displayNumber.textContent = '0';
     previousExpression.textContent = '';
