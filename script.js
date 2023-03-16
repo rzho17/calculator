@@ -22,8 +22,6 @@ let otherNum = "";
 let tempOperator = '';
 
 
-
-
 for (let num of numberButtons) {
     num.addEventListener('click', (e) => {
         initialNum += num.value;
@@ -59,7 +57,10 @@ clearBtn.addEventListener('click', clear);
 
 
 decimalBtn.addEventListener('click', () => {
-    if (initialNum.includes('.')) {
+    if (initialNum = '.') {
+        initialNum = 0;
+    }
+    else if (initialNum.includes('.')) {
         decimalBtn.disabled = true;
     }
 })
@@ -78,6 +79,7 @@ delBtn.addEventListener('click', () => {
         }
     }
 })
+
 
 function showAlert(e) {
 
@@ -98,6 +100,7 @@ function showAlert(e) {
     checkDecimal();
 
 }
+
 
 //pushes initial num into array to begin operation and display values, checks for 0 dividers and checks validation for tempNum is previousExpression display
 function getOperator(e) {
@@ -130,6 +133,7 @@ function getOperator(e) {
     showPrevious(tempNum, otherNum, chosenOperator);
     checkDecimal();
 }
+
 
 //displays the previous values above current displayed number to allow for easier viewing
 function showPrevious(num1, num2, operator) {
