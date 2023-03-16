@@ -28,10 +28,7 @@ for (let num of numberButtons) {
     num.addEventListener('click', (e) => {
         initialNum += num.value;
         displayNumber.textContent = initialNum;
-        // tempNum = initialNum;
-        // previousExpression.textContent = `${tempNum} ${chosenOperator}`;
-        // previousExpression.textContent = `${initialNum} ${chosenOperator} ${otherNum} =`;
-        // previousExpression.textContent = initialNum;
+
         switch (chosenOperator) {
             case 'divide':
                 chosenOperator = "/";
@@ -83,14 +80,11 @@ delBtn.addEventListener('click', () => {
 })
 
 function showAlert(e) {
-    // tempNum = initialNum;
 
     decimalBtn.disabled = false;
     if (initialNum !== '') {
         if (emptyArr.length === 2) {
-            // if (emptyArr[1] === e.target.value) {
-            //     console.log('hi')
-            // }
+
             getOperator();
         }
         else if (emptyArr.length < 1) {
@@ -100,35 +94,14 @@ function showAlert(e) {
         initialNum = "";
         emptyArr.push(chosenOperator);
     }
-    // displayNumber.textContent = emptyArr[0];
 
-    // switch (chosenOperator) {
-    //     case 'divide':
-    //         chosenOperator = "/";
-    //         break;
-    //     case 'multiply':
-    //         chosenOperator = "*";
-    //         break;
-    //     case 'subtract':
-    //         chosenOperator = "-";
-    //         break;
-    //     case 'add':
-    //         chosenOperator = "+";
-    //         break;
-    // }
-
-    // previousExpression.textContent = `${tempNum} ${chosenOperator} ${otherNum} =`;
     checkDecimal();
-    // previousExpression.textContent = `${tempNum} ${chosenOperator} ${initialNum}`;
+
 }
 
+//pushes initial num into array to begin operation and display values, checks for 0 dividers and checks validation for tempNum is previousExpression display
 function getOperator(e) {
-    // if (initialNum == 0 && chosenOperator === 'divide') {
-    //     alert('cant do that');
-    //     initialNum = initialNum.substring(1)
-    //     emptyArr.shift(initialNum);
-    //     emptyArr.pop();
-    // } else { 
+
     if (initialNum == 0 && emptyArr[1] === 'divide') {
         alert("Nice Try :)")
         clear();
